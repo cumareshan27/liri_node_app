@@ -74,29 +74,24 @@ var SELECTOR = function () {
         // Add code to search the TVMaze API for the given actor
         request(URL, function (err, response, body) {
             //   var jsonactor = JSON.parse(body)[0].person;
-            var jsonconcert = JSON.parse(body)[0].person);
+            var jsonconcert = JSON.parse(body)[0].offers;
             console.log(body);
-            console.log(sonconcert);
+            console.log(jsonconcert);
             var moviedetails = (`
       -----------------------------------------------------
-       Name   ${jsonconcert.Title} //Title of the movie.
-      Genres ${jsonconcert.Year} //Year the movie came out.
-      Rating ${jsonconcert.Rated} //IMDB Rating of the movie.
-      Network ${jsonconcert.Ratings.Value} //Rotten Tomatoes Rating of the movie.
-      Summary ${jsonconcert.Language}//Language of the movie.
-      Summary ${jsonconcert.Plot}//Plot of the movie.
-      Summary ${jsonconcert.Actors}//Actors in the movie.
+      Venue Name   ${jsonconcert.venue.name} 
+      Venue Country ${jsonconcert.venue.country} 
+      Venue Region ${jsonconcert.venue.region} 
+      Venue City ${jsonconcert.venue.city} 
+      Concert Date ${jsonconcert.datetime}
+    
        ---------------------------------------------------`);
-            console.log(moviedetails);
-            fs.appendFile("log.txt", moviedetails, function (err) {
+            console.log(jsonconcert);
+            fs.appendFile("log.txt", jsonconcert, function (err) {
                 if (err) throw err;
-                console.log(moviedetails);
+                console.log(jsonconcert);
             });
         });
-        
-
-        // Append the actor's name, birthday, gender, country, and URL to the `log.txt` file
-        // Print this information to the console
     };
 };
 
