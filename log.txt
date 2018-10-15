@@ -1,0 +1,10 @@
+
+      -----------------------------------------------------
+       Name   Meet the Parents //Title of the movie.
+      Genres 2000 //Year the movie came out.
+      Rating PG-13 //IMDB Rating of the movie.
+      Network undefined //Rotten Tomatoes Rating of the movie.
+      Summary English, Thai, Spanish, Hebrew, French//Language of the movie.
+      Summary Male nurse Greg Focker meets his girlfriend's parents before proposing, but her suspicious father is every date's worst nightmare.//Plot of the movie.
+      Summary Robert De Niro, Ben Stiller, Teri Polo, Blythe Danner//Actors in the movie.
+       ---------------------------------------------------
