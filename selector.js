@@ -13,16 +13,21 @@ var SELECTOR = function () {
     // findSong takes in the name of a song and searches the spotify API
 
     this.findSong = function (song) {
-        var URL = spotify.search({ type: 'track', query: song });
+        console.log("findsong");
+        console.log(song);
+        // var URL = spotify.search({ type: 'track', query: song });
 
-        request(URL, function (err, response, body) {
-            // parse the response body (string) to a JSON object
-            var jsonsong = JSON.parse(body);
-
-           // showData ends up being the string containing the show data we will print to the console
+        spotify.search({ type: 'track', query: song }, function (err, data) {
+            if (err) {
+                return console.log('Error occurred: ' + err);
+            }
+            //var jsonsong = JSON.parse(data);
+            var jsonsong = data;
+            console.log("JSONSONG: " + jsonsong);
+            //console.log("Spoptify data return" + data);
             var songData = [
                 "Show: " + jsonsong.name,
-                "Genre(s): " + jsonsong.genres.join(", "),
+                "Genre(s): " + jsonsong.genres,
                 "Rating: " + jsonsong.rating.average,
                 "Network: " + jsonsong.network.name,
                 "Summary: " + jsonsong.summary
@@ -34,9 +39,19 @@ var SELECTOR = function () {
                 console.log(showData);
             });
         });
+        //console.log(URL);
+        // request(URL, function (err, response, body) {
+        //     // parse the response body (string) to a JSON object
+        //     var jsonsong = JSON.parse(body);
+
+
+
+        //    // showData ends up being the string containing the show data we will print to the console
+
+        // });
     };
 
-        // The API will return a string containing movie details
+    // The API will return a string containing movie details
     this.findmovie = function (actor) {
         var URL = "http://www.omdbapi.com/?apikey=trilogy&t=" + actor;
 
@@ -51,7 +66,7 @@ var SELECTOR = function () {
        Name   ${jsonmovie.Title} //Title of the movie.
       Genres ${jsonmovie.Year} //Year the movie came out.
       Rating ${jsonmovie.Rated} //IMDB Rating of the movie.
-      Network ${jsonmovie.Ratings.Value} //Rotten Tomatoes Rating of the movie.
+      Network ${jsonmovie.Ratings} //Rotten Tomatoes Rating of the movie.
       Summary ${jsonmovie.Language}//Language of the movie.
       Summary ${jsonmovie.Plot}//Plot of the movie.
       Summary ${jsonmovie.Actors}//Actors in the movie.
@@ -62,31 +77,33 @@ var SELECTOR = function () {
                 console.log(moviedetails);
             });
         });
-        
+
 
         // Append the actor's name, birthday, gender, country, and URL to the `log.txt` file
         // Print this information to the console
     };
 
-    this.ffindconcert = function (artisit) {
-        var URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp" ;
+    this.findconcert = function (artist) {
+        var URL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
 
         // Add code to search the TVMaze API for the given actor
         request(URL, function (err, response, body) {
             //   var jsonactor = JSON.parse(body)[0].person;
-            var jsonconcert = JSON.parse(body)[0].offers;
-            console.log(body);
-            console.log(jsonconcert);
+            //var jsonconcert = JSON.parse(body)[0].offers;
+            console.log("Body console "+body);
+            var jsonconcert = JSON.parse(body);
+            
+            console.log(jsonconcert[0].venue);
             var moviedetails = (`
       -----------------------------------------------------
-      Venue Name   ${jsonconcert.venue.name} 
-      Venue Country ${jsonconcert.venue.country} 
-      Venue Region ${jsonconcert.venue.region} 
-      Venue City ${jsonconcert.venue.city} 
-      Concert Date ${jsonconcert.datetime}
+      Venue Name   ${jsonconcert[0].venue.name} 
+      Venue Country ${jsonconcert[0].venue.country} 
+      Venue Region ${jsonconcert[0].venue.region} 
+      Venue City ${jsonconcert[0].venue.city} 
+      Concert Date ${jsonconcert[0].datetime}
     
        ---------------------------------------------------`);
-            console.log(jsonconcert);
+            
             fs.appendFile("log.txt", jsonconcert, function (err) {
                 if (err) throw err;
                 console.log(jsonconcert);
